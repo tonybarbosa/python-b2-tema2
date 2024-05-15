@@ -1,0 +1,320 @@
+name: Autograding Tests
+'on':
+- push
+- workflow_dispatch
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: py_2a_ej2a1_test
+      id: py_2a_ej2a1_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2a_ej2a1_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2a/ej2a1_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2a_ej2a2_test
+      id: py_2a_ej2a2_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2a_ej2a2_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2a/ej2a2_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2a_ej2a3_test
+      id: py_2a_ej2a3_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2a_ej2a3_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2a/ej2a3_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2a_ej2a4_test
+      id: py_2a_ej2a4_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2a_ej2a4_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2a/ej2a4_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2b_ej2b5_test
+      id: py_2b_ej2b5_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2b_ej2b5_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2a/ej2b5_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2a_ej2a6_test
+      id: py_2a_ej2a6_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2a_ej2a6_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2a/ej2a6_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2b_ej2b1_test
+      id: py_2b_ej2b1_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2b_ej2b1_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2b/ej2b1_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2b_ej2b2_test
+      id: py_2b_ej2b2_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2b_ej2b2_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2b/ej2b2_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2b_ej2b3_test
+      id: py_2b_ej2b3_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2b_ej2b3_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2b/ej2b3_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2b_ej2b4_test
+      id: py_2b_ej2b4_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2b_ej2b4_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2b/ej2b4_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2b_ej2b5_test
+      id: py_2b_ej2b5_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2b_ej2b5_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2b/2b_ej2b5_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2c_ej2c1_test
+      id: py_2c_ej2c1_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2c_ej2c1_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2c/ej2c1_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2c_ej2c2_test
+      id: py_2c_ej2c2_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2c_ej2c2_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2c/ej2c2_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2c_ej2c3_test
+      id: py_2c_ej2c3_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2c_ej2c3_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2c/ej2c3_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2c_ej2c4_test
+      id: py_2c_ej2c4_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2c_ej2c4_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2c/ej2c4_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2c_ej2c5_test
+      id: py_2c_ej2c5_test
+      uses: classroom-resources/autograding-command-grader@v
+      with:
+        test-name: py_2c_ej2c5_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2c/ej2c5_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2c_ej2c6_test
+      id: py_2c_ej2c6_test
+      uses: classroom-resources/autograding-command-grader@v
+      with:
+        test-name: py_2c_ej2c6_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2c/ej2c6_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2d_ej2d1_test
+      id: py_2d_ej2d1_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2d_ej2d1_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2d/ej2d1_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2d_ej2d2_test
+      id: py_2d_ej2d2_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2d_ej2d2_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2d/ej2d2_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2d_ej2d3_test
+      id: py_2d_ej2d3_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2d_ej2d3_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2d/ej2d3_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2d_ej2d4_test
+      id: py_2d_ej2d4_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2d_ej2d4_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2d/ej2d4_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2d_ej2d5_test
+      id: py_2d_ej2d5_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2d_ej2d5_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2d/ej2d5_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2d_ej2d6_test
+      id: py_2d_ej2d6_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2d_ej2d6_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2d/ej2d6_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2d_ej2d7_test
+      id: py_2d_ej2d7_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2d_ej2d7_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2d/ej2d7_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2e_ej2e1_test
+      id: py_2e_ej2e1_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2e_ej2e1_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2d/ej2e1_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2e_ej2e2_test
+      id: py_2e_ej2e2_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2e_ej2e2_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2d/ej2e2_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2e_ej2e3_test
+      id: py_2e_ej2e3_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2e_ej2e3_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2d/ej2e3_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2f_ej2f1_test
+      id: py_2f_ej2f1_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2f_ej2f1_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2d/ej2f1_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2f_ej2f2_test
+      id: py_2f_ej2f2_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2f_ej2f2_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2d/ej2f2_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_2f_ej2f3_test
+      id: py_2f_ej2f3_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_2f_ej2f3_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 2d/ej2f3_test.py
+        timeout: 10
+        max-score: 1
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        PY_2A_EJ2A1_TEST_RESULTS: "${{steps.py_2a_ej2a1_test.outputs.result}}"
+        PY_2A_EJ2A2_TEST_RESULTS: "${{steps.py_2a_ej2a2_test.outputs.result}}"
+        PY_2A_EJ2A3_TEST_RESULTS: "${{steps.py_2a_ej2a3_test.outputs.result}}"
+        PY_2A_EJ2A4_TEST_RESULTS: "${{steps.py_2a_ej2a4_test.outputs.result}}"
+        PY_2B_EJ2B5_TEST_RESULTS: "${{steps.py_2b_ej2b5_test.outputs.result}}"
+        PY_2A_EJ2A6_TEST_RESULTS: "${{steps.py_2a_ej2a6_test.outputs.result}}"
+        PY_2B_EJ2B1_TEST_RESULTS: "${{steps.py_2b_ej2b1_test.outputs.result}}"
+        PY_2B_EJ2B2_TEST_RESULTS: "${{steps.py_2b_ej2b2_test.outputs.result}}"
+        PY_2B_EJ2B3_TEST_RESULTS: "${{steps.py_2b_ej2b3_test.outputs.result}}"
+        PY_2B_EJ2B4_TEST_RESULTS: "${{steps.py_2b_ej2b4_test.outputs.result}}"
+        PY_2C_EJ2C1_TEST_RESULTS: "${{steps.py_2c_ej2c1_test.outputs.result}}"
+        PY_2C_EJ2C2_TEST_RESULTS: "${{steps.py_2c_ej2c2_test.outputs.result}}"
+        PY_2C_EJ2C3_TEST_RESULTS: "${{steps.py_2c_ej2c3_test.outputs.result}}"
+        PY_2C_EJ2C4_TEST_RESULTS: "${{steps.py_2c_ej2c4_test.outputs.result}}"
+        PY_2C_EJ2C5_TEST_RESULTS: "${{steps.py_2c_ej2c5_test.outputs.result}}"
+        PY_2C_EJ2C6_TEST_RESULTS: "${{steps.py_2c_ej2c6_test.outputs.result}}"
+        PY_2D_EJ2D1_TEST_RESULTS: "${{steps.py_2d_ej2d1_test.outputs.result}}"
+        PY_2D_EJ2D2_TEST_RESULTS: "${{steps.py_2d_ej2d2_test.outputs.result}}"
+        PY_2D_EJ2D3_TEST_RESULTS: "${{steps.py_2d_ej2d3_test.outputs.result}}"
+        PY_2D_EJ2D4_TEST_RESULTS: "${{steps.py_2d_ej2d4_test.outputs.result}}"
+        PY_2D_EJ2D5_TEST_RESULTS: "${{steps.py_2d_ej2d5_test.outputs.result}}"
+        PY_2D_EJ2D6_TEST_RESULTS: "${{steps.py_2d_ej2d6_test.outputs.result}}"
+        PY_2D_EJ2D7_TEST_RESULTS: "${{steps.py_2d_ej2d7_test.outputs.result}}"
+        PY_2E_EJ2E1_TEST_RESULTS: "${{steps.py_2e_ej2e1_test.outputs.result}}"
+        PY_2E_EJ2E2_TEST_RESULTS: "${{steps.py_2e_ej2e2_test.outputs.result}}"
+        PY_2E_EJ2E3_TEST_RESULTS: "${{steps.py_2e_ej2e3_test.outputs.result}}"
+        PY_2F_EJ2F1_TEST_RESULTS: "${{steps.py_2f_ej2f1_test.outputs.result}}"
+        PY_2F_EJ2F2_TEST_RESULTS: "${{steps.py_2f_ej2f2_test.outputs.result}}"
+        PY_2F_EJ2F3_TEST_RESULTS: "${{steps.py_2f_ej2f3_test.outputs.result}}"
+      with:
+        runners: py_2a_ej2a1_test,py_2a_ej2a2_test,py_2a_ej2a3_test,py_2a_ej2a4_test,py_2b_ej2b5_test,py_2a_ej2a6_test,py_2b_ej2b1_test,py_2b_ej2b2_test,py_2b_ej2b3_test,py_2b_ej2b4_test,py_2b_ej2b5_test,py_2c_ej2c1_test,py_2c_ej2c2_test,py_2c_ej2c3_test,py_2c_ej2c4_test,py_2c_ej2c5_test,py_2c_ej2c6_test,py_2d_ej2d1_test,py_2d_ej2d2_test,py_2d_ej2d3_test,py_2d_ej2d4_test,py_2d_ej2d5_test,py_2d_ej2d6_test,py_2d_ej2d7_test,py_2e_ej2e1_test,py_2e_ej2e2_test,py_2e_ej2e3_test,py_2f_ej2f1_test,py_2f_ej2f2_test,py_2f_ej2f3_test
