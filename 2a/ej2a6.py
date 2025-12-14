@@ -38,25 +38,50 @@ import typing as t
 
 def gaussian(x: float, amplitude: float, mean: float, stddev: float) -> float:
     # Write here your code
-    pass
+    return amplitude * np.exp(-((x - mean) ** 2 / (2 * stddev**2)))
 
 def gaussian_fit_and_integration(
     data_x: t.List[float], data_y: t.List[float]
 ) -> t.Tuple[t.Tuple[float], float]:
     # Write here your code
-    pass
+    # Ajuste de la curva gaussiana
+    params, _ = optimize.curve_fit(gaussian, data_x, data_y, p0=[1, 0, 1])
+
+    # Integración de la curva gaussiana ajustada
+    integral, _ = integrate.quad(
+        lambda x: gaussian(x, *params), min(data_x), max(data_x)
+    )
+
+    return params, integral
 
 
 def plot_gaussian_fit(
     data_x: t.List[float], data_y: t.List[float], gaussian_params: t.Tuple[float]
 ):
     # Write here your code
-    pass
+    plt.figure(figsize=(10, 6))
+    plt.scatter(data_x, data_y, label="Datos Originales", color="blue")
+    plt.plot(
+        data_x,
+        gaussian(data_x, *gaussian_params),
+        label="Ajuste Gaussiano",
+        color="red",
+    )
+    plt.xlabel("Eje X")
+    plt.ylabel("Eje Y")
+    plt.title("Ajuste de Curva Gaussiana y Datos Originales")
+    plt.legend()
+    plt.show()
 
 
 # Si quieres probar tu código, descomenta las siguientes líneas y ejecuta el script
-# data_x = np.linspace(-5, 5, 100)
-# data_y = 3 * np.exp(-(data_x - 1) ** 2 / (2 * 1.5 ** 2)) + np.random.normal(0, 0.2, 100)
-# gaussian_params, integral = gaussian_fit_and_integration(data_x, data_y)
-# print("Integral de la curva gaussiana ajustada:", integral)
-# plot_gaussian_fit(data_x, data_y, gaussian_params)
+data_x = np.linspace(-5, 5, 100)
+data_y = 3 * np.exp(-(data_x - 1) ** 2 / (2 * 1.5 ** 2)) + np.random.normal(0, 0.2, 100)
+gaussian_params, integral = gaussian_fit_and_integration(data_x, data_y)
+print("Integral de la curva gaussiana ajustada:", integral)
+plot_gaussian_fit(data_x, data_y, gaussian_params)
+
+
+
+# me faltan conocimientos matematicos para desarrolar estye tipo de analisis
+# ejercicio copiado de las soluciones

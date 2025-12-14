@@ -37,23 +37,39 @@ from sklearn.metrics import r2_score, mean_squared_error
 def prepare_data_for_regression(file_path: str) -> Tuple:
     # Write here your code
     pass
+    data = pd.read_csv(file_path, skiprows=14)
+    X = data.drop("MEDV", axis=1)
+    y = data["MEDV"]
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+    print(X_train, X_test, y_train, y_test)
+    return X_train, X_test, y_train, y_test
 
 
 def perform_random_forest_regression(X_train, y_train) -> RandomForestRegressor:
     # Write here your code
-    pass
+    model = RandomForestRegressor(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
+    print(model)
+    return model
 
 
 def evaluate_regression_model(model, X_test, y_test) -> Tuple[float, float]:
     # Write here your code
-    pass
+    y_pred = model.predict(X_test)
+    r_squared = r2_score(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    print(f'R^2: {r_squared}, RMSE: {rmse}')
+    return r_squared, rmse
+
 
 
 # Para probar el código, debes descomentar las siguientes líneas:
-# if __name__ == '__main__':
-#     current_dir = Path(__file__).parent
-#     file_path = current_dir / 'data/housing.csv'
-#     X_train, X_test, y_train, y_test = prepare_data_for_regression(file_path)
-#     model = perform_random_forest_regression(X_train, y_train)
-#     r_squared, rmse = evaluate_regression_model(model, X_test, y_test)
-#     print(f'R^2 del modelo: {r_squared}, RMSE: {rmse}')
+if __name__ == '__main__':
+    current_dir = Path(__file__).parent
+    file_path = current_dir / 'data/housing.csv'
+    X_train, X_test, y_train, y_test = prepare_data_for_regression(file_path)
+    model = perform_random_forest_regression(X_train, y_train)
+    r_squared, rmse = evaluate_regression_model(model, X_test, y_test)
+    print(f'R^2 del modelo: {r_squared}, RMSE: {rmse}')

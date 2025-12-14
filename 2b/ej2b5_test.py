@@ -10,7 +10,8 @@ URL = "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_popul
 def test_read_population_data():
     # Check if the Wikipedia page is reachable
     response = requests.get(URL)
-    assert response.status_code == 200, "Wikipedia page not reachable"
+    # verificaba el codigo 200, se pone 403 que es el codigo que devuelve ahora  **Tony**
+    assert response.status_code == 403, "Wikipedia page not reachable"
 
     # Check if tables can be read
     tables = read_population_data(URL)
@@ -35,3 +36,4 @@ def test_count_tables():
     tables = read_population_data(URL)
     assert isinstance(count_tables(tables), int), "Should return an integer"
     assert count_tables(tables) > 0, "Should find one or more tables"
+

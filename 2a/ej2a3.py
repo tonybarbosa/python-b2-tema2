@@ -26,9 +26,14 @@ def create_and_modify_meshgrid(
     start: int, end: int, step: int
 ) -> t.Tuple[np.ndarray, np.ndarray]:
     # Write here your code
-    pass
-
+    #np.meshgrid
+    x = np.arange(start, end+1, step)
+    y = np.arange(start, end+1, step)
+    #print(x,y)
+    X, Y = np.meshgrid(x, y)
+    X[0, :] = 99
+    return X, Y
 
 # Para probar tu código, puedes usar los siguientes parámetros:
-# X, Y = create_and_modify_meshgrid(-5, 5, 1)
-# print(X)
+X, Y = create_and_modify_meshgrid(-5, 5, 1)
+print(X,"\n", Y)

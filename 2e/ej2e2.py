@@ -51,7 +51,7 @@ el modelo.
 """
 
 
-from matplotlib.colors import ListedColormap
+#from matplotlib.colors import ListedColormap
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
@@ -62,37 +62,67 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 def create_meshgrid(X, resolution=0.02):
     # Write here your code
-    pass
+    x1_min, x1_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+    x2_min, x2_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+    xx1, xx2 = np.meshgrid(
+        np.arange(x1_min, x1_max, resolution), np.arange(x2_min, x2_max, resolution)
+    )
+    print(xx1, xx2)
+    return xx1, xx2
+
 
 
 def plot_decision_boundaries(ax, X, y, classifier, resolution=0.02):
     # Write here your code
     pass
+    xx1, xx2 = create_meshgrid(X, resolution)
+    Z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)
+    Z = Z.reshape(xx1.shape)
 
+    ax.contourf(xx1, xx2, Z, alpha=0.4, cmap="viridis")
+
+    ax.scatter(X[:, 0], X[:, 1], c=y, cmap="viridis", edgecolor="k", s=20)
+    ax.set_xlabel("Feature 1")
+    ax.set_ylabel("Feature 2")
+    print(ax)
+    return ax
 
 def plot_confusion_matrix(ax, y_true, y_pred, classes):
     # Write here your code
-    pass
-
+    cm = confusion_matrix(y_true, y_pred)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=classes)
+    disp.plot(ax=ax)
+    ax.set_title("Confusion Matrix")
+    print(ax)
+    return ax
 
 def train_and_visualize(X, y):
     # Write here your code
-    pass
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.3, random_state=1
+    )
+    classifier = KNeighborsClassifier(
+        n_neighbors=3, weights="uniform", metric="minkowski"
+    )
+    classifier.fit(X_train, y_train)
+    print(X_train, X_test, y_train, y_test, classifier)
+
+    return X_train, X_test, y_train, y_test, classifier
 
 
 # Para probar el código, descomenta las siguientes líneas
-# if __name__ == "__main__":
-#     iris = datasets.load_iris()
-#     X = iris.data[:, :2]
-#     y = iris.target
+if __name__ == "__main__":
+    iris = datasets.load_iris()
+    X = iris.data[:, :2]
+    y = iris.target
 
-#     X_train, X_test, y_train, y_test, classifier = train_and_visualize(X, y)
+    X_train, X_test, y_train, y_test, classifier = train_and_visualize(X, y)
 
-#     fig, axs = plt.subplots(1, 2, figsize=(12, 5))
-#     plot_decision_boundaries(axs[0], X_train, y_train, classifier)
-#     plot_confusion_matrix(
-#         axs[1], y_test, classifier.predict(X_test), classes=iris.target_names
-#     )
+    fig, axs = plt.subplots(1, 2, figsize=(12, 5))
+    plot_decision_boundaries(axs[0], X_train, y_train, classifier)
+    plot_confusion_matrix(
+        axs[1], y_test, classifier.predict(X_test), classes=iris.target_names
+    )
 
-#     plt.tight_layout()
-#     plt.show()
+    plt.tight_layout()
+    plt.show()

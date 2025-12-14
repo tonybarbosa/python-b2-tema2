@@ -35,28 +35,41 @@ import pandas as pd
 
 def group_and_aggregate(df, group_columns, agg_dict):
     # Write here your code
-    pass
+    df1 = df.groupby(group_columns).agg(agg_dict)
+    return df1
 
 def standardize_column_by_group(df, group_columns, column_to_standardize):
     # Write here your code
-    pass
+    if df[column_to_standardize].dtype.kind not in "biufc":  # mita si el tipo de la columna es numerico
+                                                    # b: boolean, i: integer, u: unsigned integer, f: float, c: complex
+        raise ValueError(
+            f"La columna '{column_to_standardize}' no es numérica y no puede ser estandarizada."
+        )
+    ## formula de estandarizacion (x - mean) / std ,  mas info en https://es.wikipedia.org/wiki/Normalizaci%C3%B3n_(estad%C3%ADstica)
+    standardized_values = df.groupby(group_columns)[column_to_standardize].transform(
+        lambda x: (x - x.mean()) / x.std()
+    )
+
+    new_column_name = f"{column_to_standardize}_Standardized"
+    df[new_column_name] = standardized_values
+    return df
 
 
 # Para probar el código, descomenta las siguientes líneas y asegúrate de que el path al archivo sea correcto
-# if __name__ == "__main__":
-#     current_dir = Path(__file__).parent
-#     FILE_PATH = current_dir / "data/products.csv"
-#     df = pd.read_csv(FILE_PATH)
-#     group_columns = ["Category", "Brand"]
-#     agg_dict = {"Price": ["min", "max", "sum"], "Rating": ["mean"]}
+if __name__ == "__main__":
+    current_dir = Path(__file__).parent
+    FILE_PATH = current_dir / "data/products.csv"
+    df = pd.read_csv(FILE_PATH)
+    group_columns = ["Category", "Brand"]
+    agg_dict = {"Price": ["min", "max", "sum"], "Rating": ["mean"]}
 
-#     aggregated_df = group_and_aggregate(df, group_columns, agg_dict)
-#     print(aggregated_df)
+    aggregated_df = group_and_aggregate(df, group_columns, agg_dict)
+    print(aggregated_df)
 
-#     group_columns = ["Category", "Brand"]
-#     column_to_standardize = "Rating"
+    group_columns = ["Category", "Brand"]
+    column_to_standardize = "Rating"
 
-#     df_standardized = standardize_column_by_group(
-#         df, group_columns, column_to_standardize
-#     )
-#     print(df_standardized.head())
+    df_standardized = standardize_column_by_group(
+        df, group_columns, column_to_standardize
+    )
+    print(df_standardized.head())

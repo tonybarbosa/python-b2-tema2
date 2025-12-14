@@ -37,32 +37,39 @@ from scipy import stats
 
 def calculate_mean(file_path: str) -> float:
     # Write here your code
-    pass
+    df = pd.read_csv(file_path)
+    media = df["Calificaciones"].mean()
+    return(media)
 
 
-def calculate_mean(file_path: str) -> float:
+def calculate_variance(file_path: str) -> float:
     # Write here your code
-    pass
-
+    df = pd.read_csv(file_path)
+    varianza = df["Calificaciones"].var()
+    return(varianza)
 
 def calculate_skewness(file_path: str) -> float:
     # Write here your code
-    pass
+    df = pd.read_csv(file_path)
+    skewness = stats.skew(df["Calificaciones"])
+    return(skewness)
 
 
 def calculate_kurtosis(file_path: str) -> float:
     # Write here your code
-    pass
+    df = pd.read_csv(file_path)
+    kurtosis = stats.kurtosis(df["Calificaciones"])
+    return(kurtosis)
 
 
 # Para probar el código, descomenta las siguientes líneas
-# if __name__ == "__main__":
-#     current_dir = Path(__file__).parent
-#     FILE_PATH = current_dir / 'data/calificaciones.csv'
-#     mean = calculate_mean(FILE_PATH)
-#     variance = calculate_variance(FILE_PATH)
-#     skewness = calculate_skewness(FILE_PATH)
-#     kurtosis = calculate_kurtosis(FILE_PATH)
+if __name__ == "__main__":
+    current_dir = Path(__file__).parent
+    FILE_PATH = current_dir / 'data/calificaciones.csv'
+    mean = calculate_mean(FILE_PATH)
+    variance = calculate_variance(FILE_PATH)    
+    skewness = calculate_skewness(FILE_PATH)
+    kurtosis = calculate_kurtosis(FILE_PATH)
 
 #     # Mostrar los resultados calculados
-#     print(f'Media: {mean}, Varianza: {variance}, Asimetría: {skewness}, Curtosis: {kurtosis}')
+    print(f'Media: {mean},\n Varianza: {variance},\n Asimetría: {skewness},\n Curtosis: {kurtosis}')

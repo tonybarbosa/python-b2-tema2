@@ -49,56 +49,77 @@ import pandas as pd
 
 def read_csv_basic(file_path):
     # Write here your code
-    pass
+    df = pd.read_csv(file_path)
+    return df
 
 
 def stack_dataframe(df):
     # Write here your code
-    pass
-
-
+    df1 = df.set_index(
+        ["Product ID", "Product Name", "Brand", "Category"]
+    ).stack()  # con esta funcion crea un stack pero en cada fila tiene un multiindex
+    
+    return df1
+     
+    
 def unstack_dataframe(df_stacked):
     # Write here your code
-    pass
+    df1 = df_stacked.unstack()  # con esta funcion crea unstack para revertir el stack
+    return df1
 
 
 def pivot_dataframe(df):
     # Write here your code
-    pass
+    pivot_df = pd.pivot_table(
+        df,
+        index='Product ID', 
+        columns='Category',
+        values='Price'
+    )
+    return pivot_df
 
 
 def melt_dataframe(df):
     # Write here your code
-    pass
-
+    df_melted = pd.melt(
+        df,
+        id_vars=["Product ID", "Product Name", "Brand", "Category", "Color", "Size"],
+        value_vars=["Price", "Rating"],
+        var_name="Variable",
+        value_name="Value"
+    )
+    return df_melted
 
 def transpose_dataframe(df):
     # Write here your code
-    pass
+    def1= df.transpose()  # con esta funcion transpone el dataframe
+    return def1
 
 
 def show_dataframe(nombre, df):
     # Write here your code
-    pass
+    print(f"### {nombre} DataFrame:")
+    print(df)
 
 
 # # Para probar el código, descomenta las siguientes líneas
-# if __name__ == "__main__":
-#     current_dir = Path(__file__).parent
-#     FILE_PATH = current_dir / "data/products.csv"
-#     df = read_csv_basic(FILE_PATH)
+if __name__ == "__main__":
+    current_dir = Path(__file__).parent
+    FILE_PATH = current_dir / "data/products.csv"
+    df = read_csv_basic(FILE_PATH)
+    show_dataframe("BASIC", df)
 
-#     df_stacked = stack_dataframe(df)
-#     show_dataframe("Stack", df_stacked)
+    df_stacked = stack_dataframe(df)
+    show_dataframe("Stack", df_stacked)
 
-#     df_unstacked = unstack_dataframe(df_stacked)
-#     show_dataframe("Unstack", df_unstacked)
+    df_unstacked = unstack_dataframe(df_stacked)
+    show_dataframe("Unstack", df_unstacked)
 
-#     df_pivoted = pivot_dataframe(df)
-#     show_dataframe("Pivot", df_pivoted)
+    df_pivoted = pivot_dataframe(df)
+    show_dataframe("Pivot", df_pivoted)
 
-#     df_melted = melt_dataframe(df)
-#     show_dataframe("Melt", df_melted)
+    df_melted = melt_dataframe(df)
+    show_dataframe("Melt", df_melted)
 
-#     df_transposed = transpose_dataframe(df)
-#     show_dataframe("Transpose", df_transposed)
+    df_transposed = transpose_dataframe(df)
+    show_dataframe("Transpose", df_transposed)

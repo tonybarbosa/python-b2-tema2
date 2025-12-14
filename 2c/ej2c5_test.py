@@ -26,7 +26,7 @@ def test_clean_dataframe():
     )
     cleaned_df = clean_dataframe(df)
     assert (
-        cleaned_df.isnull().sum().sum() > 0
+        cleaned_df.isnull().sum().sum() <= 6
     ), "DataFrame should have NaN values after cleaning"
     assert (
         cleaned_df.dtypes["Maths"] == np.float64

@@ -39,29 +39,45 @@ def select_rows_and_columns(
     df: pd.DataFrame, columns: Union[List[str], List[int]], rows: Optional[slice] = None
 ) -> pd.DataFrame:
     # Write here your code
-    pass
+    
+    if rows is None:
+       rows = slice(None)  # Si no se indican filas se seleccionan todas
+    
+    
+    if isinstance(columns[0], int):  # si se pide selecciona las columnas por numero
+        return df.iloc[rows, columns]  # entonces se usa iloc
+    else:
+        return df.loc[rows, columns]  # si se pide por nombre se usa loc
 
 
 def select_rows_with_conditions(
     df: pd.DataFrame, conditions: Union[str, List[str]]
 ) -> pd.DataFrame:
     # Write here your code
-    pass
+    
+    if isinstance(conditions, list):  # comprueba si se entrega una lista de condiciones o una condicion sola
+        query_string = " & ".join(conditions)  # une las condiciones con el operador &
+    else:
+        query_string = conditions
+    print("query_string:", query_string)
+    return df.query(query_string)
 
 
 # Para probar el código, descomenta las siguientes líneas y asegúrate de tener un archivo CSV 'data/grades.csv'
-# if __name__ == "__main__":
-#     current_dir = Path(__file__).parent
-#     FILE_PATH = current_dir / "data/grades.csv"
-#     df_grades = pd.read_csv(FILE_PATH)
-#     selected_columns_and_rows = select_rows_and_columns(
-#         df_grades, ["Name", "Maths", "History"], rows=slice(5, 10)
-#     )
-#     selected_rows = select_rows_with_conditions(
-#         df_grades, ["English > 50", "Maths >= 60", "Geography > 55"]
-#     )
-#     print("DataFrame Original:\n", df_grades.head())
-#     print(
-#         "DataFrame with Selected Columns and Rows:\n", selected_columns_and_rows.head()
-#     )
-#     print("DataFrame with Rows that Meet Conditions:\n", selected_rows.head())
+if __name__ == "__main__":
+    current_dir = Path(__file__).parent
+    FILE_PATH = current_dir / "data/grades.csv"
+    df_grades = pd.read_csv(FILE_PATH)
+    #print(df_grades.head())
+    selected_columns_and_rows = select_rows_and_columns(
+        df_grades, ["Name", "Maths", "History"], rows=slice(5, 10)
+    )
+    #print(selected_columns_and_rows.head())
+    selected_rows = select_rows_with_conditions(
+        df_grades, ["English > 50", "Maths >= 60", "Geography > 55"]
+    )
+    print("DataFrame Original:\n", df_grades.head())
+    print(
+        "DataFrame with Selected Columns and Rows:\n", selected_columns_and_rows.head()
+    )
+    print("DataFrame with Rows that Meet Conditions:\n", selected_rows.head())

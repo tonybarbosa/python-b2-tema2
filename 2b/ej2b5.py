@@ -47,31 +47,53 @@ import typing as t
 
 
 def read_population_data(url: str, match_text: str = None) -> t.List[pd.DataFrame]:
-    # Write here your code
-    pass
+    # Si se proporciona match_text, solo leer tablas que contengan esa cadena
+    attrs = {
+        "class": "wikitable"
+    }  # Asumiendo que queremos tablas con la clase 'wikitable'
+    headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    }
+    
+    if match_text:
+        #tables = pd.read_html(url, match=match_text, attrs=attrs, na_values=["—", "None"])
+        tables = pd.read_html(url, storage_options={'User-Agent': headers['User-Agent']}, attrs=attrs, na_values=["—", "None"])
+        print(f"Éxito! Se cargaron {len(tables)} tablas.")
+    else:
+        #tables = pd.read_html(url, attrs=attrs, na_values=["–", "None"])
+        tables = pd.read_html(url, storage_options={'User-Agent': headers['User-Agent']}, na_values=["—", "None"])
+        print(f"Éxito! Se cargaron {len(tables)} tablas.")
+    return tables
 
 
 def get_table_by_string_match(
     tables: t.List[pd.DataFrame], match_text: str
 ) -> t.Union[pd.DataFrame, None]:
-    # Write here your code
-    pass
+    try:
+        for table in tables:
+            if match_text in table.to_string():
+                return table
+        print(f"No se encontró una tabla que coincida con '{match_text}'.")
+        return None
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
+        return None
 
 
 def count_tables(tables: t.List[pd.DataFrame]) -> int:
-    # Write here your code
-    pass
+    return len(tables)
 
 
 # Para probar el código, descomenta las siguientes líneas
-# url = "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population"
-# tables = read_population_data(url)
-# print(f"Número de tablas en la página: {count_tables(tables)}")
-# selected_table = get_table_by_string_match(tables, "Spain")
+url = "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population"
+tables = read_population_data(url)
+print(f"Número de tablas en la página: {count_tables(tables)}")
+selected_table = get_table_by_string_match(tables, "Spain")
 
-# if selected_table is not None:
-#     print(f"Registros en la tabla: {len(selected_table)}")
-#     print(f"Nombres de columnas: {selected_table.columns.tolist()}")
-#     print(selected_table)
-# else:
-#     print("No se encontró la tabla con el texto proporcionado.")
+
+if selected_table is not None:
+    print(f"Registros en la tabla: {len(selected_table)}")
+    print(f"Nombres de columnas: {selected_table.columns.tolist()}")
+    print(selected_table)
+else:
+    print("No se encontró la tabla con el texto proporcionado.")

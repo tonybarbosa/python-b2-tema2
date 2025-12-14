@@ -48,37 +48,74 @@ import numpy as np
 
 def read_csv(filepath):
     # Write here your code
-    pass
+    df = pd.read_csv(filepath)
+    return df
 
 
 def clean_dataframe(df):
     # Write here your code
-    pass
+    
+    '''
+    # es mi codigoy da error F also en el test
+    valores_a_reemplazar = ['Null', '-', 'NA', 'na', 'nan' ' ']
+    df_limpio = df.replace(valores_a_reemplazar, np.nan)
+    columnas=["Hindi","English","Science","Maths","History","Geography"]
+    df_limpio[columnas] = df_limpio[columnas].apply(pd.to_numeric, errors='coerce').astype(float)
+    return df_limpio
+    '''
+    
+    # con este codigo tampoco pasa el testy continua con el error F
+
+    
+    df.replace(["Null", "-", "NA", "na", "nan", ""], np.nan, inplace=True)
+    df = df.apply(lambda x: x.str.strip() if x.dtype == "object" else x).replace(
+        "", np.nan
+    )
+
+    for col in df.columns[1:]:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
+    return df
+
+
 
 
 def dropna_specific_row_in_column(df, column_name):
     # Write here your code
-    pass
+    df1 = df.dropna(subset=["Name"])
+    return df1
 
 
 def fillna_method(df, column_name, fill_method="ffill", fill_value=None, limit=1):
     # Write here your code
-    pass
-
+    if fill_method == "ffill":
+        df[column_name] = df[column_name].ffill(limit=limit)
+    elif fill_method == "mean":
+        #df[column_name] = pd.to_numeric(df[column_name], errors="coerce") #los valores parecn numericos pero son alfanumericos
+        if fill_value is not None:
+            mean_value = fill_value
+        else:
+            mean_value = df[column_name].mean()
+        df[column_name] = df[column_name].fillna(mean_value)
+    else:
+        raise ValueError("fill_method debe ser 'ffill' o 'mean'")
+    return df
 
 # Para probar el código, descomenta las siguientes líneas y asegúrate de que el path al archivo sea correcto
-# if __name__ == "__main__":
-#     current_dir = Path(__file__).parent
-#     FILE_PATH = current_dir / "data/grades_na.csv"
-#     dataframe = read_csv(FILE_PATH)
-#     df_cleaned = clean_dataframe(dataframe)
-#     df_drop_na_rows = dropna_specific_row_in_column(df_cleaned, "Name")
-#     df_filled_column_ffill = fillna_method(
-#         df_drop_na_rows, "Hindi", fill_method="ffill", limit=1
-#     )
-#     df_filled_column_mean = fillna_method(
-#         df_filled_column_ffill, "Maths", fill_method="mean"
-#     )
 
-#     print(dataframe.head())
-#     print(df_filled_column_mean.head())
+if __name__ == "__main__":
+    current_dir = Path(__file__).parent
+    FILE_PATH = current_dir / "data/grades_na.csv"
+    dataframe = read_csv(FILE_PATH)
+    df_cleaned = clean_dataframe(dataframe)
+    df_drop_na_rows = dropna_specific_row_in_column(df_cleaned, "Name")
+    print(df_drop_na_rows)   
+    df_filled_column_ffill = fillna_method(
+        df_drop_na_rows, "Hindi", fill_method="ffill", limit=1
+    )
+    
+    df_filled_column_mean = fillna_method(
+        df_filled_column_ffill, "Maths", fill_method="mean"
+    )
+
+    print(dataframe.head())
+    print(df_filled_column_mean.head())

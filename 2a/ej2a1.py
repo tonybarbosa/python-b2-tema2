@@ -24,10 +24,15 @@ import numpy as np
 
 
 def simulate_dice_rolls(number: int) -> dict:
-    # Write here your code
-    pass
+    dado = {1: 0.0, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.0}
+    for _ in range(number):
+        roll = np.random.randint(1, 7)
+        dado[roll] += 1.0
+    for k in dado:
+        dado[k] /= number
+    return dado
 
 
 # Si quieres probar tu código, descomenta las siguientes líneas y ejecuta el script
-# num_rolls = 10000
-# print(simulate_dice_rolls(num_rolls))
+num_rolls = 10000
+print(simulate_dice_rolls(num_rolls))
